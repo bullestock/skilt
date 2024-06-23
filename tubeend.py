@@ -1,0 +1,36 @@
+import cadquery as cq
+
+w = 26.8 # 26.9
+h = 10
+
+res = (cq.Workplane("XY")
+       .tag("o")
+       .box(w, w, h)
+       .faces(">Z")
+       .circle(4.5/2)
+       .cutBlind(-4)
+       .circle(4.2/2)
+       .cutThruAll()
+       .workplaneFromTagged("o")
+       .transformed(offset=(0, w/2, 0))
+       .rarray(5, 1, 4, 1)
+       .circle(1)
+       .cutThruAll()
+       .workplaneFromTagged("o")
+       .transformed(offset=(0, -w/2, 0))
+       .rarray(5, 1, 4, 1)
+       .circle(1)
+       .cutThruAll()
+       .workplaneFromTagged("o")
+       .transformed(offset=(w/2, 0, 0))
+       .rarray(1, 5, 1, 4)
+       .circle(1)
+       .cutThruAll()
+       .workplaneFromTagged("o")
+       .transformed(offset=(-w/2, 0, 0))
+       .rarray(1, 5, 1, 4)
+       .circle(1)
+       .cutThruAll()
+       )
+
+show_object(res)
